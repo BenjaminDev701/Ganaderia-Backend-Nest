@@ -1,0 +1,1 @@
+modules/: Cada carpeta dentro de modules debe ser 100% independiente. Si el día de mañana necesitas sacar el módulo users y convertirlo en un microservicio, deberías poder copiar y pegar la carpeta sin que se rompa nada (Principio de Cohesión).

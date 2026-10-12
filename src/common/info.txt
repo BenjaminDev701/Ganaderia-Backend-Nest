@@ -1,0 +1,1 @@
+common/: Aquí vivirá todo lo que sea agnóstico al negocio. Un Guard de JWT o un decorador de Roles puede ser usado en el módulo de Animales, Dietas o Usuarios. No pertenecen a un solo dominio, por eso van aquí.
