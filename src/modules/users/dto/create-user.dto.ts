@@ -14,7 +14,7 @@ export class CreateUserDto {
     email: string
 
     @IsString()
-    @MinLength(8, { message: "Debe de ser de almenos 8 caracteres" })
+    @MinLength(8, { message: "La contraseña debe de ser de almenos 8 caracteres" })
     @MaxLength(50, { message: "Debe de ser de al menos 50 caracteres" })
     password: string
 

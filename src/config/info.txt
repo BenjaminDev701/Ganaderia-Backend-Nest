@@ -1,0 +1,1 @@
+jwt.config.ts :Es la configuración que usara el backend para crear y firmar tokens cuando un usuario inicia sesion
