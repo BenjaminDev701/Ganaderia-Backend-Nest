@@ -1,0 +1,1 @@
+jwt.strategy.ts: esta estrategia sirve para recibir, validar y autenticar tokens que los clientes envían en sus peticiones HTTP cuando intentan acceder a rutas protegidas.

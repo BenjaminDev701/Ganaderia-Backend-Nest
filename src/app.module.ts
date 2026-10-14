@@ -4,11 +4,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { UsersModule } from './modules/users/users.module.js';
+import { AuthModule } from './modules/auth/auth.module.js';
 
 @Module({
     imports: [
         // 1. Carga el .env en process.env
-        ConfigModule.forRoot(),
+        ConfigModule.forRoot({
+            isGlobal: true,
+        }),
 
         // 2. Usas process.env directamente (con '+' para convertir el puerto a número)
         TypeOrmModule.forRoot({
@@ -30,6 +33,8 @@ import { UsersModule } from './modules/users/users.module.js';
         }),
 
         UsersModule,
+
+        AuthModule,
     ],
     controllers: [AppController],
     providers: [AppService],

@@ -19,7 +19,8 @@ export class UsersService {
       const hashPasswordUser = await bcrypt.hash(password, 10);
       //*password sobreescribe al del dto y le coloca la contraseña ya hasheada
       const user = this.userRepository.create({ ...createUserDto, password: hashPasswordUser })
-      return this.userRepository.save(user)
+      await this.userRepository.save(user)
+      return { message: "Usuario Creado Exitosamente" }
     } catch (error) {
       this.handleDbExceptions(error)
     }
@@ -37,13 +38,22 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
+    //**Se busca el usuario que se quiere actualizar, si no existe lanza error
     const user = await this.findOne(id)
-    if (updateUserDto.password) {
-      updateUserDto.password = await bcrypt.hash(updateUserDto.password, 10)
+    try {
+      //**Se comprueba si se actualiza la contraseña
+      if (updateUserDto.password) {
+        updateUserDto.password = await bcrypt.hash(updateUserDto.password, 10)
+      }
+      //*Object.assign: mezcla el objeto user con el objeto updateUserDto y sobreescribe los campos
+      const updateUser = Object.assign(user, updateUserDto)
+      await this.userRepository.save(updateUser)
+      return {
+        message: "El usuario fue actualizado correctamente"
+      }
+    } catch (error) {
+      this.handleDbExceptions(error)
     }
-    //*Object.assign: mezcla el objeto user con el objeto updateUserDto y sobreescribe los campos
-    const updateUser = Object.assign(user, updateUserDto)
-    return this.userRepository.save(updateUser)
 
 
   }
@@ -54,13 +64,27 @@ export class UsersService {
     return { message: "Usuario eliminado correctamente" }
   }
 
+  //*busca el usuario por su email y devuelve lo selecionado por select
+  async findByEmail(email: string) {
+    const user = await this.userRepository.findOne({
+      where: { email },
+      //*para mandar lo seleccionado colocamos la propiedad y un true
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        password: true,
+        role: true,
+      },
+    });
+    if (!user) throw new NotFoundException('El usuario no fue encontrado');
+    return user;
+  }
+
   private handleDbExceptions(error: any) {
     if (error.code === "23505") {
       throw new BadRequestException("El correo ya esta registrado")
     }
-    else {
-      throw new InternalServerErrorException("ERROR INTERNO")
-    }
-
+    throw new InternalServerErrorException("ERROR INTERNO")
   }
 }

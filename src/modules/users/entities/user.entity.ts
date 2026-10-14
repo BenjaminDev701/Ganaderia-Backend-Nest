@@ -12,7 +12,8 @@ export class User {
     @Column({ unique: true, type: "varchar" })
     email: string
 
-    @Column({ nullable: false, type: "varchar" })
+    //*select: false  para que no mande la contraseña 
+    @Column({ nullable: false, type: "varchar", select: false })
     password: string
 
     //*Role = trabajador como default
