@@ -5,6 +5,7 @@ import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { UsersModule } from './modules/users/users.module.js';
 import { AuthModule } from './modules/auth/auth.module.js';
+import { AnimalsModule } from './modules/animals/animals.module.js';
 
 @Module({
     imports: [
@@ -35,6 +36,8 @@ import { AuthModule } from './modules/auth/auth.module.js';
         UsersModule,
 
         AuthModule,
+
+        AnimalsModule,
     ],
     controllers: [AppController],
     providers: [AppService],
